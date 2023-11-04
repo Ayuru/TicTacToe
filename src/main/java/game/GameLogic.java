@@ -29,7 +29,6 @@ public class GameLogic {
             System.out.println("The game have ended with a draw. Good luck next time.");
             return true;
         } else return false;
-
     }
 
     public Players switchPlayers(Player playerOne, Player playerTwo) {
@@ -46,6 +45,8 @@ public class GameLogic {
             }
         }
         return marks;
-
     }
+
 }
+
+

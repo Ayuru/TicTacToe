@@ -8,13 +8,14 @@ public class GameBoard {
     private boolean restart = true;
     private String[][] board;
     private final Scanner scanner = new Scanner(System.in);
-
-    private GameLogic gameLogic = new GameLogic();
-
-
+    private final GameLogic gameLogic = new GameLogic();
+    private final Messages message = new Messages();
 
     public void play() {
         intro();
+        message.tutorial();
+        scanner.nextLine();
+        message.go();
         while(restart) {
             board = gameLogic.generateBoard();
             gamePlay();
@@ -24,19 +25,18 @@ public class GameBoard {
 
     public void intro() {
         String name;
-        System.out.println("\nPlayer 1, you'll use 'X'. What's your name?");
+        message.pickPlayerName(1, "'X'");
         name = scanner.nextLine();
         playerOne = new Player(name, "X");
-        System.out.println("\nPlayer 2,  you'll use 'O'. What's your name?");
+        message.pickPlayerName(2, "'Y'");
         name= scanner.nextLine();
 
         while(name.equals(playerOne.getName())) {
-            System.out.println("You have to choose different name. What's your name?");
+            message.repeatPlayerName();
             name= scanner.nextLine();
         }
 
         playerTwo = new Player(name, "O");
-        System.out.println("\nLet's go!");
     }
 
 
@@ -44,25 +44,26 @@ public class GameBoard {
 
         boolean end = false;
 
-        while (!end){
-            displayBoard();
-            end  = pickYourMoveX();
-            if (!end){
-            displayBoard();
-            end = pickYourMoveO();}
+        while (!end) {
+            message.displayBoard(board);
+            end = pickYourMoveX();
+            if (!end) {
+                message.displayBoard(board);
+                end = pickYourMoveO();
+            }
         }
-        System.out.println("\nEND RESULT:");
-        System.out.println(playerOne.getName() +  " - " + playerTwo.getName() + " " + playerOne.getPoints() + ":" + playerTwo.getPoints());
+        message.displayBoard(board);
+        message.endResult(playerOne, playerTwo);
         playerOne.clearMoves();
         playerTwo.clearMoves();
     }
 
     public boolean restartOption() {
         scanner.nextLine();
-        System.out.println("\nDo you want to play again? Enter 'yes' if so.");
+        message.restart(1);
         String input = scanner.nextLine();
         if (input.equals("yes") || input.equals("YES")) {
-            System.out.println("Restarting the game...");
+            message.restart(2);
             restart = true;
             Players players = gameLogic.switchPlayers(playerOne, playerTwo);
             playerOne = players.getPlayerOne();
@@ -71,16 +72,6 @@ public class GameBoard {
         restart = false;
         }
         return restart;
-    }
-
-    public void displayBoard() {
-        System.out.println("\n");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(" | " + board[i][j]);
-            }
-            System.out.print( " |\n\n");
-        }
     }
 
     public boolean pickYourMoveX() {
@@ -97,7 +88,7 @@ public class GameBoard {
         boolean availability = true;
         boolean range = true;
         Coordinates coordinates = new Coordinates(0, 0);
-        System.out.println(player.getName() + ", pick your move ");
+        message.pickMove(player.getName());
         while (availability || range) {
             try {
             coordinates.convert(scanner.nextInt());
@@ -107,7 +98,7 @@ public class GameBoard {
             } catch (Exception e) {
                 scanner.nextLine();
                 System.out.println("Oh no! Something went wrong! Error: " + e + "\nLets try again!");
-                System.out.println(player.getName() + ", pick your move ");
+                message.pickMove(player.getName());
             }
         }
         player.addMove(coordinates);
