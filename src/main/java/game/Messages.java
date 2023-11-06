@@ -1,5 +1,7 @@
 package game;
 
+import game.extended.Monster;
+
 public class Messages {
     public void difficulty() {
         System.out.println("Pick a game mode:\n 1 - Classic with other player\n 2 - Classic with computer\n 3 - Battle edition with other player");
@@ -60,6 +62,16 @@ public class Messages {
         }
     }
 
+    public void displayExtendedBoard(Monster[][] board) {
+        System.out.println("\n");
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(" | " + board[i][j].getName());
+            }
+            System.out.print(" |\n\n");
+        }
+    }
+
     public void tutorial() {
         System.out.println("\nHow do game coordinates work?");
         System.out.println("Just enter double digit number presenting row and column.\n");
@@ -68,5 +80,12 @@ public class Messages {
         System.out.println("2  | 21 |  22 | 23 |");
         System.out.println("3  | 31 |  32 | 33 |\n");
         System.out.println("After reading press 'ENTER'.");
+    }
+
+    public void battleCard(Monster monster) {
+        System.out.println("\n#################");
+        System.out.println(monster.getName());
+        System.out.println(" HP: " + monster.getHp());
+        System.out.println("#################");
     }
 }
