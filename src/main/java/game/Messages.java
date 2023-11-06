@@ -2,7 +2,7 @@ package game;
 
 public class Messages {
     public void difficulty() {
-        System.out.println("Pick a difficulty level: 1 - Classic, 2 - Extended");
+        System.out.println("Pick a game mode:\n 1 - Classic with other player\n 2 - Classic with computer\n 3 - Battle edition with other player");
     }
 
     public void pickPlayerName(int number, String mark) {
@@ -17,8 +17,24 @@ public class Messages {
         System.out.println(name + ", pick your move ");
     }
 
+    public void fieldVerification(int number) {
+        if (number == 1) {
+            System.out.println("This field is already taken. Pick another one!");
+        } else {
+            System.out.println("This field is out of range. Pick another one!");
+        }
+    }
+
     public void go() {
         System.out.println("\nLet's go!");
+    }
+
+    public void resultVerification(int number, Player player) {
+        if (number == 1) {
+            System.out.println("Congratulations, " + player.getName() + ". You've won.");
+        } else {
+            System.out.println("The game have ended with a draw. Good luck next time.");
+        }
     }
 
     public void endResult(Player playerOne, Player playerTwo) {
@@ -46,7 +62,7 @@ public class Messages {
     }
 
     public void tutorial() {
-        System.out.println("How do game coordinates work?");
+        System.out.println("\nHow do game coordinates work?");
         System.out.println("Just enter double digit number presenting row and column.\n");
         System.out.println("     1     2    3\n");
         System.out.println("1  | 11 |  12 | 13 |");

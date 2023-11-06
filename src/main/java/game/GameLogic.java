@@ -1,10 +1,13 @@
 package game;
 
+
 public class GameLogic {
+
+    Messages message = new Messages();
 
     public boolean availabilityCheck(Coordinates move, Player playerOne, Player playerTwo) {
         if (playerOne.getMoves().contains(move) || playerTwo.getMoves().contains(move)) {
-            System.out.println("This field is already taken. Pick another one!");
+            message.fieldVerification(1);
             return true;
         } else {
             return false;
@@ -13,7 +16,7 @@ public class GameLogic {
 
     public boolean rangeCheck(Coordinates move, int size) {
         if ((move.getRow() > size || move.getRow() < 1) || (move.getColumn() > size || move.getColumn() < 1)) {
-            System.out.println("This field is out of range. Pick another one!");
+            message.fieldVerification(2);
             return true;
         } else {
             return false;
@@ -22,11 +25,11 @@ public class GameLogic {
 
     public boolean resultCheck(Player player) {
         if (player.win()) {
-            System.out.println("Congratulations, " + player.getName() + ". You've won.");
+            message.resultVerification(1, player);
             player.updatePoints();
             return true;
         } else if (player.getMoves().size() == 5) {
-            System.out.println("The game have ended with a draw. Good luck next time.");
+            message.resultVerification(2, player);
             return true;
         } else return false;
     }
