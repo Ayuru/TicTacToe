@@ -7,6 +7,7 @@ public class GameBoard {
     private Player playerTwo;
     private boolean restart = true;
     private String[][] board;
+    private final int size = 3;
     private final Scanner scanner = new Scanner(System.in);
     private final GameLogic gameLogic = new GameLogic();
     private final Messages message = new Messages();
@@ -17,7 +18,7 @@ public class GameBoard {
         scanner.nextLine();
         message.go();
         while (restart) {
-            board = gameLogic.generateBoard();
+            board = gameLogic.generateBoard(size);
             gamePlay();
             restart = restartOption();
         }
@@ -93,7 +94,6 @@ public class GameBoard {
             try {
                 coordinates.convert(scanner.nextInt());
                 availability = gameLogic.availabilityCheck(coordinates, playerOne, playerTwo);
-                int size = 3;
                 range = gameLogic.rangeCheck(coordinates, size);
             } catch (Exception e) {
                 scanner.nextLine();

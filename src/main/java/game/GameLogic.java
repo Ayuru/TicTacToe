@@ -39,9 +39,9 @@ public class GameLogic {
     }
 
 
-    public String[][] generateBoard() {
+    public String[][] generateBoard(int size) {
 
-        String[][] marks = new String[3][3];
+        String[][] marks = new String[size][size];
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 marks[i][j] = "     ";
