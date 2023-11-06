@@ -16,7 +16,7 @@ public class GameBoard {
         message.tutorial();
         scanner.nextLine();
         message.go();
-        while(restart) {
+        while (restart) {
             board = gameLogic.generateBoard();
             gamePlay();
             restart = restartOption();
@@ -29,11 +29,11 @@ public class GameBoard {
         name = scanner.nextLine();
         playerOne = new Player(name, "X");
         message.pickPlayerName(2, "'Y'");
-        name= scanner.nextLine();
+        name = scanner.nextLine();
 
-        while(name.equals(playerOne.getName())) {
+        while (name.equals(playerOne.getName())) {
             message.repeatPlayerName();
-            name= scanner.nextLine();
+            name = scanner.nextLine();
         }
 
         playerTwo = new Player(name, "O");
@@ -69,7 +69,7 @@ public class GameBoard {
             playerOne = players.getPlayerOne();
             playerTwo = players.getPlayerTwo();
         } else {
-        restart = false;
+            restart = false;
         }
         return restart;
     }
@@ -91,7 +91,7 @@ public class GameBoard {
         message.pickMove(player.getName());
         while (availability || range) {
             try {
-            coordinates.convert(scanner.nextInt());
+                coordinates.convert(scanner.nextInt());
                 availability = gameLogic.availabilityCheck(coordinates, playerOne, playerTwo);
                 int size = 3;
                 range = gameLogic.rangeCheck(coordinates, size);

@@ -13,7 +13,7 @@ public class Messages {
         System.out.println("You have to choose different name. What's your name?");
     }
 
-    public void pickMove (String name) {
+    public void pickMove(String name) {
         System.out.println(name + ", pick your move ");
     }
 
@@ -39,14 +39,13 @@ public class Messages {
 
     public void endResult(Player playerOne, Player playerTwo) {
         System.out.println("\nEND RESULT:");
-        System.out.println(playerOne.getName() +  " - " + playerTwo.getName() + " " + playerOne.getPoints() + ":" + playerTwo.getPoints());
+        System.out.println(playerOne.getName() + " - " + playerTwo.getName() + " " + playerOne.getPoints() + ":" + playerTwo.getPoints());
     }
 
     public void restart(int step) {
-        if(step == 1) {
+        if (step == 1) {
             System.out.println("\nDo you want to play again? Enter 'yes' if so.");
-        }
-        else {
+        } else {
             System.out.println("Restarting the game...");
         }
     }
@@ -57,7 +56,7 @@ public class Messages {
             for (int j = 0; j < 3; j++) {
                 System.out.print(" | " + board[i][j]);
             }
-            System.out.print( " |\n\n");
+            System.out.print(" |\n\n");
         }
     }
 
