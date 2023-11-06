@@ -33,4 +33,11 @@ public class Mage implements PlayerClass {
     public int getCurrentHP() {
         return currentHP;
     }
+
+
+    public int getLevel() {
+        return level;
+    }
 }
+
+

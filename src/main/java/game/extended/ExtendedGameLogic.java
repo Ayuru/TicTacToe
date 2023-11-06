@@ -1,6 +1,7 @@
 package game.extended;
 
 import game.GameLogic;
+import game.Players;
 
 public class ExtendedGameLogic extends GameLogic {
 
@@ -22,5 +23,9 @@ public class ExtendedGameLogic extends GameLogic {
             }
         }
         return marks;
+    }
+
+    public ExtendedPlayers switchPlayers(ExtendedPlayer playerOne, ExtendedPlayer playerTwo) {
+        return new ExtendedPlayers(playerTwo, playerOne);
     }
 }

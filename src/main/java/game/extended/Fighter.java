@@ -35,4 +35,7 @@ public class Fighter implements PlayerClass {
         return currentHP;
     }
 
+    public int getLevel() {
+        return level;
+    }
 }

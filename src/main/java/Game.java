@@ -12,13 +12,16 @@ public class Game {
         String difficulty;
         message.difficulty();
         difficulty = scanner.nextLine();
-        if (difficulty.equals("1")) {
-            GameBoard board = new GameBoard();
-            board.play();
-        } else {
-            System.out.println("Nothing new here, bye!");
-            ExtendedGameBoard board = new ExtendedGameBoard();
-            board.play();
+        switch (difficulty) {
+            case "1" -> {
+                GameBoard board = new GameBoard();
+                board.play();
+            }
+            case "3" -> {
+                ExtendedGameBoard board = new ExtendedGameBoard();
+                board.play();
+            }
+            default -> System.out.println("Nothing here (for now?), bye!");
         }
 
     }

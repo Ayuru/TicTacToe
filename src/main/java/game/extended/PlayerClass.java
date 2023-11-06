@@ -11,4 +11,6 @@ public interface PlayerClass {
 
     void heal();
 
+    int getLevel();
+
 }

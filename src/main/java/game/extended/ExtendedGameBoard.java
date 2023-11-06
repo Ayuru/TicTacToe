@@ -28,7 +28,7 @@ public class ExtendedGameBoard {
         while(restart) {
             board = gameLogic.generateExtendedBoard();
             gamePlay();
-
+            restart = restartOption();
         }
     }
 
@@ -105,6 +105,22 @@ public class ExtendedGameBoard {
             player.addMove(coordinates);
             board[coordinates.getRow() - 1][coordinates.getColumn() - 1].setName("  " + player.getMark() + "  ");
         }
+    }
+
+    public boolean restartOption() {
+        scanner.nextLine();
+        message.restart(1);
+        String input = scanner.nextLine();
+        if (input.equals("yes") || input.equals("YES")) {
+            message.restart(2);
+            restart = true;
+            ExtendedPlayers players = gameLogic.switchPlayers(playerOne, playerTwo);
+            playerOne = players.getPlayerOne();
+            playerTwo = players.getPlayerTwo();
+        } else {
+            restart = false;
+        }
+        return restart;
     }
 
 }

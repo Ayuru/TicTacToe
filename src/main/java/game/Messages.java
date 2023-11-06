@@ -1,5 +1,6 @@
 package game;
 
+import game.extended.ExtendedPlayer;
 import game.extended.Monster;
 
 public class Messages {
@@ -82,10 +83,18 @@ public class Messages {
         System.out.println("After reading press 'ENTER'.");
     }
 
-    public void battleCard(Monster monster) {
+    public void monsterBattleCard(Monster monster) {
         System.out.println("\n#################");
         System.out.println(monster.getName());
         System.out.println(" HP: " + monster.getHp());
+        System.out.println("#################\n");
+    }
+
+    public void playerBattleCard(ExtendedPlayer player) {
         System.out.println("#################");
+        System.out.println(player.getPlayerClass().getClass());
+        System.out.println(" Level: " + player.getPlayerClass().getLevel());
+        System.out.println(" HP: " + player.getPlayerClass().getCurrentHP());
+        System.out.println("#################\n");
     }
 }
