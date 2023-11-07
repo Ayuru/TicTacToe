@@ -1,7 +1,5 @@
 package game.extended;
 
-import game.Player;
-
 public class ExtendedPlayers {
 
     private final ExtendedPlayer PlayerOne;

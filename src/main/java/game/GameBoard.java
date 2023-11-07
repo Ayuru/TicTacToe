@@ -7,13 +7,17 @@ public class GameBoard {
     private Player playerTwo;
     private boolean restart = true;
     private String[][] board;
-    private final int size = 3;
+    private final int size;
     private final Scanner scanner = new Scanner(System.in);
     private final GameLogic gameLogic = new GameLogic();
     private final Messages message = new Messages();
 
-    public void play() {
-        intro();
+    public GameBoard(int size) {
+        this.size = size;
+    }
+
+    public void play(int mode) {
+        intro(mode);
         message.tutorial();
         scanner.nextLine();
         message.go();
@@ -24,33 +28,39 @@ public class GameBoard {
         }
     }
 
-    public void intro() {
+    public void intro(int mode) {
         String name;
         message.pickPlayerName(1, "'X'");
         name = scanner.nextLine();
         playerOne = new Player(name, "X");
-        message.pickPlayerName(2, "'Y'");
-        name = scanner.nextLine();
-
-        while (name.equals(playerOne.getName())) {
-            message.repeatPlayerName();
+        if ( mode == 1) {
+            message.pickPlayerName(2, "'Y'");
             name = scanner.nextLine();
-        }
 
-        playerTwo = new Player(name, "O");
+            while (name.equals(playerOne.getName())) {
+                message.repeatPlayerName();
+                name = scanner.nextLine();
+            }
+
+            playerTwo = new Player(name, "O");
+        } else {
+            playerTwo = new Player("Computer", "O");
+        }
     }
 
 
     public void gamePlay() {
 
         boolean end = false;
-
+        int round = 0;
         while (!end) {
+            round++;
             message.displayBoard(board);
-            end = pickYourMoveX();
+            end = pickYourMoveX(round);
             if (!end) {
+                round++;
                 message.displayBoard(board);
-                end = pickYourMoveO();
+                end = pickYourMoveO(round);
             }
         }
         message.displayBoard(board);
@@ -75,14 +85,14 @@ public class GameBoard {
         return restart;
     }
 
-    public boolean pickYourMoveX() {
+    public boolean pickYourMoveX(int round) {
         pickYourMove(playerOne);
-        return gameLogic.resultCheck(playerOne);
+        return gameLogic.resultCheck(playerOne, size, round);
     }
 
-    public boolean pickYourMoveO() {
+    public boolean pickYourMoveO(int round) {
         pickYourMove(playerTwo);
-        return gameLogic.resultCheck(playerTwo);
+        return gameLogic.resultCheck(playerTwo, size, round);
     }
 
     private void pickYourMove(Player player) {
@@ -92,7 +102,7 @@ public class GameBoard {
         message.pickMove(player.getName());
         while (availability || range) {
             try {
-                coordinates.convert(scanner.nextInt());
+                coordinates.update(scanner.nextInt(), scanner.nextInt());
                 availability = gameLogic.availabilityCheck(coordinates, playerOne, playerTwo);
                 range = gameLogic.rangeCheck(coordinates, size);
             } catch (Exception e) {

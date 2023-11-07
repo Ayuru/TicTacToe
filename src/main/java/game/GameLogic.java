@@ -23,12 +23,12 @@ public class GameLogic {
         }
     }
 
-    public boolean resultCheck(Player player) {
+    public boolean resultCheck(Player player, int size, int round) {
         if (player.win()) {
             message.resultVerification(1, player);
             player.updatePoints();
             return true;
-        } else if (player.getMoves().size() == 5) {
+        } else if (round == size * size) {
             message.resultVerification(2, player);
             return true;
         } else return false;
@@ -42,8 +42,8 @@ public class GameLogic {
     public String[][] generateBoard(int size) {
 
         String[][] marks = new String[size][size];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 marks[i][j] = "     ";
             }
         }

@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class ExtendedGameBoard {
 
+
     private boolean restart = true;
     private ExtendedPlayer playerOne;
     private ExtendedPlayer playerTwo;
@@ -14,11 +15,15 @@ public class ExtendedGameBoard {
     private final Scanner scanner = new Scanner(System.in);
 
     private Monster[][] board;
+    private int size;
 
     private final ExtendedGameLogic gameLogic = new ExtendedGameLogic();
 
     private final Messages message = new Messages();
 
+    public ExtendedGameBoard(int size) {
+        this.size = size;
+    }
 
     public void play() {
         extendedIntro();
@@ -26,7 +31,7 @@ public class ExtendedGameBoard {
         scanner.nextLine();
         message.go();
         while(restart) {
-            board = gameLogic.generateExtendedBoard();
+            board = gameLogic.generateExtendedBoard(size);
             gamePlay();
             restart = restartOption();
         }
@@ -58,13 +63,16 @@ public class ExtendedGameBoard {
     public void gamePlay() {
 
         boolean end = false;
+        int round = 0;
 
         while (!end) {
+            round++;
             message.displayExtendedBoard(board);
-            end = pickYourMoveX();
+            end = pickYourMoveX(round);
             if (!end) {
+                round++;
                 message.displayExtendedBoard(board);
-                end = pickYourMoveO();
+                end = pickYourMoveO(round);
             }
         }
         message.displayExtendedBoard(board);
@@ -73,14 +81,14 @@ public class ExtendedGameBoard {
         playerTwo.clearMoves();
     }
 
-    public boolean pickYourMoveX() {
+    public boolean pickYourMoveX(int round) {
         pickYourMove(playerOne);
-        return gameLogic.resultCheck(playerOne);
+        return gameLogic.resultCheck(playerOne, size, round);
     }
 
-    public boolean pickYourMoveO() {
+    public boolean pickYourMoveO(int round) {
         pickYourMove(playerTwo);
-        return gameLogic.resultCheck(playerTwo);
+        return gameLogic.resultCheck(playerTwo, size, round);
     }
 
     private void pickYourMove(ExtendedPlayer player) {
@@ -91,7 +99,7 @@ public class ExtendedGameBoard {
         message.pickMove(player.getName());
         while (availability || range) {
             try {
-                coordinates.convert(scanner.nextInt());
+                coordinates.update(scanner.nextInt(), scanner.nextInt());
                 availability = gameLogic.availabilityCheck(coordinates, playerOne, playerTwo);
                 int size = 3;
                 range = gameLogic.rangeCheck(coordinates, size);

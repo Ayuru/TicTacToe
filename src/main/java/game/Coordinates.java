@@ -11,9 +11,9 @@ public class Coordinates {
         this.column = column;
     }
 
-    public void convert(int input) {
-        row = input / 10;
-        column = input % 10;
+    public void update(int a, int b) {
+        row = a;
+        column = b;
     }
 
     public Coordinates neighbourNorth() {

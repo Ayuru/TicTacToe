@@ -5,7 +5,12 @@ import game.extended.Monster;
 
 public class Messages {
     public void difficulty() {
-        System.out.println("Pick a game mode:\n 1 - Classic with other player\n 2 - Classic with computer\n 3 - Battle edition with other player");
+        System.out.println("""
+                Pick a game mode:
+                 1 - Classic 3x3 with other player
+                 2 - Classic 3x3 with computer
+                 3 - Classic 10x10 with other player
+                 4 - Battle edition with other player""");
     }
 
     public void pickPlayerName(int number, String mark) {
@@ -55,9 +60,9 @@ public class Messages {
 
     public void displayBoard(String[][] board) {
         System.out.println("\n");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(" | " + board[i][j]);
+        for (String[] strings : board) {
+            for (int j = 0; j < board.length; j++) {
+                System.out.print(" | " + strings[j]);
             }
             System.out.print(" |\n\n");
         }
@@ -65,9 +70,9 @@ public class Messages {
 
     public void displayExtendedBoard(Monster[][] board) {
         System.out.println("\n");
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                System.out.print(" | " + board[i][j].getName());
+        for (Monster[] monsters : board) {
+            for (int j = 0; j < board.length; j++) {
+                System.out.print(" | " + monsters[j].getName());
             }
             System.out.print(" |\n\n");
         }
@@ -75,11 +80,11 @@ public class Messages {
 
     public void tutorial() {
         System.out.println("\nHow do game coordinates work?");
-        System.out.println("Just enter double digit number presenting row and column.\n");
-        System.out.println("     1     2    3\n");
-        System.out.println("1  | 11 |  12 | 13 |");
-        System.out.println("2  | 21 |  22 | 23 |");
-        System.out.println("3  | 31 |  32 | 33 |\n");
+        System.out.println("Just enter two numbers (separated by SPACE) presenting row and column.\n");
+        System.out.println("     1      2     3\n");
+        System.out.println("1  | 1 1 |  1 2 | 1 3 |");
+        System.out.println("2  | 2 1 |  2 2 | 2 3 |");
+        System.out.println("3  | 3 1 |  3 2 | 3 3 |\n");
         System.out.println("After reading press 'ENTER'.");
     }
 

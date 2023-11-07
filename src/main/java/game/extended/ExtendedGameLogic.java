@@ -5,13 +5,13 @@ import game.Players;
 
 public class ExtendedGameLogic extends GameLogic {
 
-    public Monster[][] generateExtendedBoard() {
+    public Monster[][] generateExtendedBoard(int size) {
         Dice dice = new Dice();
         int roll;
 
-        Monster[][] marks = new Monster[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
+        Monster[][] marks = new Monster[size][size];
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 roll = dice.roll(6);
                 if(roll % 2 == 0) {
                     marks[i][j] = new Goblin();

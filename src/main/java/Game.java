@@ -14,12 +14,21 @@ public class Game {
         difficulty = scanner.nextLine();
         switch (difficulty) {
             case "1" -> {
-                GameBoard board = new GameBoard();
-                board.play();
+                GameBoard board = new GameBoard(3);
+                board.play(1);
+            }
+            case "2" -> {
+                GameBoard board = new GameBoard(3);
+                board.play(2);
             }
             case "3" -> {
-                ExtendedGameBoard board = new ExtendedGameBoard();
+                GameBoard board = new GameBoard(10);
+                board.play(1);
+            }
+            case "4" -> {
+                ExtendedGameBoard board = new ExtendedGameBoard(3);
                 board.play();
+
             }
             default -> System.out.println("Nothing here (for now?), bye!");
         }
