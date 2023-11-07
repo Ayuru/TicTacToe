@@ -23,12 +23,12 @@ public class GameLogic {
         }
     }
 
-    public boolean resultCheck(Player player, int size, int round) {
-        if (player.win()) {
+    public boolean resultCheck(Player player, int boardSize, int winSize, int round) {
+        if (player.win(winSize)) {
             message.resultVerification(1, player);
             player.updatePoints();
             return true;
-        } else if (round == size * size) {
+        } else if (round == boardSize * boardSize) {
             message.resultVerification(2, player);
             return true;
         } else return false;

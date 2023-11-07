@@ -1,6 +1,6 @@
 package game.extended;
 
-public class Goblin implements Monster{
+public class Goblin implements Monster {
 
     String name = "GOBLIN";
     private int hp = 12;
@@ -8,9 +8,9 @@ public class Goblin implements Monster{
     private int experiencePoints = 5;
     private Dice dice = new Dice();
 
-    public int attack(){
+    public int attack() {
         int damage = attack + dice.roll(2);
-        System.out.println("Hit: " +  damage);
+        System.out.println("Hit: " + damage);
         return damage;
     }
 

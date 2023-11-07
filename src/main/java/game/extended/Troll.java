@@ -1,6 +1,6 @@
 package game.extended;
 
-public class Troll implements Monster{
+public class Troll implements Monster {
 
     String name = "TROLL";
     private int hp = 60;
@@ -8,9 +8,9 @@ public class Troll implements Monster{
     private int experiencePoints = 25;
     private Dice dice = new Dice();
 
-    public int attack(){
+    public int attack() {
         int damage = attack + dice.roll(4);
-        System.out.println("Hit: " +  damage);
+        System.out.println("Hit: " + damage);
         return damage;
     }
 

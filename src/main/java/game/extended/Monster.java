@@ -12,5 +12,4 @@ public interface Monster {
     public int attack();
 
 
-
 }

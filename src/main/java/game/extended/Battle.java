@@ -3,7 +3,6 @@ package game.extended;
 import game.Messages;
 
 
-
 public class Battle {
     Wait wait = new Wait();
 
@@ -21,7 +20,7 @@ public class Battle {
             monster.defend(damage);
             System.out.println("Monster HP: " + monster.getHp());
             wait.wait(1);
-            if(monster.getHp() > 0) {
+            if (monster.getHp() > 0) {
                 damage = monster.attack();
                 player.getPlayerClass().defend(damage);
                 System.out.println("pPlayer HP: " + player.getPlayerClass().getCurrentHP());

@@ -1,4 +1,5 @@
 package game.extended;
+
 import game.Coordinates;
 import game.Messages;
 
@@ -15,14 +16,17 @@ public class ExtendedGameBoard {
     private final Scanner scanner = new Scanner(System.in);
 
     private Monster[][] board;
-    private int size;
+
+    private final int boardSize;
+    private final int winSize;
 
     private final ExtendedGameLogic gameLogic = new ExtendedGameLogic();
 
     private final Messages message = new Messages();
 
-    public ExtendedGameBoard(int size) {
-        this.size = size;
+    public ExtendedGameBoard(int size, int winSize) {
+        this.boardSize = size;
+        this.winSize = winSize;
     }
 
     public void play() {
@@ -30,8 +34,8 @@ public class ExtendedGameBoard {
         message.tutorial();
         scanner.nextLine();
         message.go();
-        while(restart) {
-            board = gameLogic.generateExtendedBoard(size);
+        while (restart) {
+            board = gameLogic.generateExtendedBoard(boardSize);
             gamePlay();
             restart = restartOption();
         }
@@ -47,11 +51,11 @@ public class ExtendedGameBoard {
         playerOne.addClass(code);
 
         message.pickPlayerName(2, "'Y'");
-        name= scanner.nextLine();
+        name = scanner.nextLine();
 
-        while(name.equals(playerOne.getName())) {
+        while (name.equals(playerOne.getName())) {
             message.repeatPlayerName();
-            name= scanner.nextLine();
+            name = scanner.nextLine();
         }
 
         playerTwo = new ExtendedPlayer(name, "O");
@@ -83,12 +87,12 @@ public class ExtendedGameBoard {
 
     public boolean pickYourMoveX(int round) {
         pickYourMove(playerOne);
-        return gameLogic.resultCheck(playerOne, size, round);
+        return gameLogic.resultCheck(playerOne, boardSize, winSize, round);
     }
 
     public boolean pickYourMoveO(int round) {
         pickYourMove(playerTwo);
-        return gameLogic.resultCheck(playerTwo, size, round);
+        return gameLogic.resultCheck(playerTwo, boardSize, winSize, round);
     }
 
     private void pickYourMove(ExtendedPlayer player) {

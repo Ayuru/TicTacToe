@@ -7,13 +7,15 @@ public class GameBoard {
     private Player playerTwo;
     private boolean restart = true;
     private String[][] board;
-    private final int size;
+    private final int boardSize;
+    private final int winSize;
     private final Scanner scanner = new Scanner(System.in);
     private final GameLogic gameLogic = new GameLogic();
     private final Messages message = new Messages();
 
-    public GameBoard(int size) {
-        this.size = size;
+    public GameBoard(int boardSize, int winSize) {
+        this.boardSize = boardSize;
+        this.winSize = winSize;
     }
 
     public void play(int mode) {
@@ -22,7 +24,7 @@ public class GameBoard {
         scanner.nextLine();
         message.go();
         while (restart) {
-            board = gameLogic.generateBoard(size);
+            board = gameLogic.generateBoard(boardSize);
             gamePlay();
             restart = restartOption();
         }
@@ -33,7 +35,7 @@ public class GameBoard {
         message.pickPlayerName(1, "'X'");
         name = scanner.nextLine();
         playerOne = new Player(name, "X");
-        if ( mode == 1) {
+        if (mode == 1) {
             message.pickPlayerName(2, "'Y'");
             name = scanner.nextLine();
 
@@ -87,12 +89,12 @@ public class GameBoard {
 
     public boolean pickYourMoveX(int round) {
         pickYourMove(playerOne);
-        return gameLogic.resultCheck(playerOne, size, round);
+        return gameLogic.resultCheck(playerOne, boardSize, winSize, round);
     }
 
     public boolean pickYourMoveO(int round) {
         pickYourMove(playerTwo);
-        return gameLogic.resultCheck(playerTwo, size, round);
+        return gameLogic.resultCheck(playerTwo, boardSize, winSize, round);
     }
 
     private void pickYourMove(Player player) {
@@ -104,7 +106,7 @@ public class GameBoard {
             try {
                 coordinates.update(scanner.nextInt(), scanner.nextInt());
                 availability = gameLogic.availabilityCheck(coordinates, playerOne, playerTwo);
-                range = gameLogic.rangeCheck(coordinates, size);
+                range = gameLogic.rangeCheck(coordinates, boardSize);
             } catch (Exception e) {
                 scanner.nextLine();
                 System.out.println("Oh no! Something went wrong! Error: " + e + "\nLets try again!");

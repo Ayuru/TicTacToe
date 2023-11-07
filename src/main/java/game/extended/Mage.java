@@ -9,9 +9,9 @@ public class Mage implements PlayerClass {
     private int attack = 12;
     private Dice dice = new Dice();
 
-    public int attack(){
+    public int attack() {
         int damage = attack + dice.roll(6);
-        System.out.println("Hit: " +  damage);
+        System.out.println("Hit: " + damage);
         return damage;
     }
 

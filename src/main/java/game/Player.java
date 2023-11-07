@@ -20,34 +20,69 @@ public class Player {
         moves.add(move);
     }
 
-    public boolean win() {
+    public boolean win(int size) {
         if (moves.size() > 2) {
             Coordinates move = moves.get(moves.size() - 1);
-            return rowCheck(move) || columnCheck(move) || crossCheck(move);
+            return rowCheck(move, size) || columnCheck(move, size) || crossRightCheck(move, size) || crossLeftCheck(move, size);
         } else {
             return false;
         }
     }
 
-    public boolean rowCheck(Coordinates move) {
-        return moves.contains(move.neighbourEast()) && moves.contains(move.neighbourWest())
-                || moves.contains(move.neighbourEast()) && moves.contains(move.neighbourEast().neighbourEast())
-                || moves.contains(move.neighbourWest()) && moves.contains(move.neighbourWest().neighbourWest());
+    public boolean rowCheck(Coordinates move, int size) {
+        Coordinates enteredMove = move;
+        while (moves.contains(move.neighbourWest())) {
+            move = move.neighbourWest();
+            size--;
+        }
+        move = enteredMove;
+        while (moves.contains(move.neighbourEast())) {
+            move = move.neighbourEast();
+            size--;
+        }
+        return size == 1;
     }
 
-    public boolean columnCheck(Coordinates move) {
-        return moves.contains(move.neighbourNorth()) && moves.contains(move.neighbourSouth())
-                || moves.contains(move.neighbourNorth()) && moves.contains(move.neighbourNorth().neighbourNorth())
-                || moves.contains(move.neighbourSouth()) && moves.contains(move.neighbourSouth().neighbourSouth());
+    public boolean columnCheck(Coordinates move, int size) {
+        Coordinates enteredMove = move;
+        while (moves.contains(move.neighbourNorth())) {
+            move = move.neighbourNorth();
+            size--;
+        }
+        move = enteredMove;
+        while (moves.contains(move.neighbourSouth())) {
+            move = move.neighbourSouth();
+            size--;
+        }
+        return size == 1;
     }
 
-    public boolean crossCheck(Coordinates move) {
-        return moves.contains(move.neighbourNW()) && moves.contains(move.neighbourSE())
-                || moves.contains(move.neighbourNW()) && moves.contains(move.neighbourNW().neighbourNW())
-                || moves.contains(move.neighbourSE()) && moves.contains(move.neighbourSE().neighbourSE())
-                || moves.contains(move.neighbourNE()) && moves.contains(move.neighbourSW())
-                || moves.contains(move.neighbourNE()) && moves.contains(move.neighbourNE().neighbourNE())
-                || moves.contains(move.neighbourSW()) && moves.contains(move.neighbourSW().neighbourSW());
+    public boolean crossRightCheck(Coordinates move, int size) {
+        Coordinates enteredMove = move;
+        while (moves.contains(move.neighbourNW())) {
+            move = move.neighbourNW();
+            size--;
+        }
+        move = enteredMove;
+        while (moves.contains(move.neighbourSE())) {
+            move = move.neighbourSE();
+            size--;
+        }
+        return size == 1;
+    }
+
+    public boolean crossLeftCheck(Coordinates move, int size) {
+        Coordinates enteredMove = move;
+        while (moves.contains(move.neighbourNE())) {
+            move = move.neighbourNE();
+            size--;
+        }
+        move = enteredMove;
+        while (moves.contains(move.neighbourSW())) {
+            move = move.neighbourSW();
+            size--;
+        }
+        return size == 1;
     }
 
     public void updatePoints() {

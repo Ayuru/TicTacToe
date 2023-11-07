@@ -13,9 +13,9 @@ public class ExtendedGameLogic extends GameLogic {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 roll = dice.roll(6);
-                if(roll % 2 == 0) {
+                if (roll % 2 == 0) {
                     marks[i][j] = new Goblin();
-                } else if(roll == 1) {
+                } else if (roll == 1) {
                     marks[i][j] = new Troll();
                 } else {
                     marks[i][j] = new Orc();

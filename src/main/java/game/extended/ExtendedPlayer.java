@@ -11,7 +11,7 @@ public class ExtendedPlayer extends Player {
         super(name, mark);
     }
 
-    public void addClass(String code){
+    public void addClass(String code) {
         if (code.equals("1")) {
             playerClass = new Mage();
         } else {
