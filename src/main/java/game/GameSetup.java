@@ -6,6 +6,10 @@ import java.util.Scanner;
 
 public class GameSetup {
 
+    public enum GameMode {
+        Classic3x3Multiplayer, Classic5x5Multiplayer, Classic3x3Singleplayer, Extended
+    }
+
     public void run() {
         Messages message = new Messages();
         Scanner scanner = new Scanner(System.in);

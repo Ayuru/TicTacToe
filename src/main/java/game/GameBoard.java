@@ -27,8 +27,10 @@ public class GameBoard {
         message.tutorial();
         scanner.nextLine();
         message.go();
+        BoardGenerator generator = new BoardGenerator();
+
         while (restart) {
-            board = gameLogic.generateBoard(boardSize);
+            board = generator.generateBoard(boardSize);
             gamePlay();
             restart = restartOption();
         }
