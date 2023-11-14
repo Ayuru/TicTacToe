@@ -1,16 +1,26 @@
 package game;
 
 public class Computer {
-    int move;
 
-    public int move(Player player, Player computer) {
 
-        if (player.getMoves().size() + computer.getMoves().size() < 2) {
-            move = 11;
-        } else if (player.getMoves().size() + computer.getMoves().size() < 4) {
-            move = 13;
+    public int move(Player player, Player computer, int boardSize, int round) {
+
+        Coordinates move = new Coordinates(boardSize /2, boardSize /2);
+        if (round == 1) {
+            computer.addMove(move);
+        } else if (round == 2) {
+            if (player.getMoves().contains(move)) {
+                computer.addMove(move.neighbourNE());
+            } else {
+                computer.addMove(move);
+            }
+        } else if (round == 3) {
+            move = player.getMoves().get(player.getMoves().size() - 1);
+
+        } else if (round == 4) {
+
         }
 
-        return move;
+        return 0;
     }
 }

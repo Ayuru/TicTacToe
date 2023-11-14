@@ -2,19 +2,26 @@ package game;
 
 public class Players {
 
-    private final Player PlayerOne;
-    private final Player PlayerTwo;
+    private Player playerOne;
+    private Player playerTwo;
 
     public Players(Player playerOne, Player playerTwo) {
-        PlayerOne = playerOne;
-        PlayerTwo = playerTwo;
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+    }
+
+    public void switchPlayers() {
+        Player substitute;
+        substitute = playerOne;
+        playerOne = playerTwo;
+        playerTwo = substitute;
     }
 
     public Player getPlayerOne() {
-        return PlayerOne;
+        return playerOne;
     }
 
     public Player getPlayerTwo() {
-        return PlayerTwo;
+        return playerTwo;
     }
 }

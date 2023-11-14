@@ -3,8 +3,8 @@ package game;
 
 public class GameLogic {
 
-    public boolean availabilityCheck(Coordinates move, Player playerOne, Player playerTwo, Messages message) {
-        if (playerOne.getMoves().contains(move) || playerTwo.getMoves().contains(move)) {
+    public boolean availabilityCheck(Coordinates move, Players players, Messages message) {
+        if (players.getPlayerOne().getMoves().contains(move) || players.getPlayerTwo().getMoves().contains(move)) {
             message.fieldVerification(1);
             return true;
         } else {
@@ -30,10 +30,6 @@ public class GameLogic {
             message.resultVerification(2, player);
             return true;
         } else return false;
-    }
-
-    public Players switchPlayers(Player playerOne, Player playerTwo) {
-        return new Players(playerTwo, playerOne);
     }
 
 }

@@ -1,7 +1,5 @@
 package game;
 
-import game.extended.ExtendedGameBoard;
-
 import java.util.Scanner;
 
 public class GameSetup {
@@ -30,8 +28,7 @@ public class GameSetup {
                 board.play(1);
             }
             case "4" -> {
-                ExtendedGameBoard board = new ExtendedGameBoard(3, 3, message);
-                board.play();
+
 
             }
             default -> System.out.println("Nothing here (for now?), bye!");

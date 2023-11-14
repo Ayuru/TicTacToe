@@ -3,8 +3,7 @@ package game;
 import java.util.Scanner;
 
 public class GameBoard {
-    private Player playerOne;
-    private Player playerTwo;
+    private Players players;
     private boolean restart = true;
     private String[][] board;
     private final int boardSize;
@@ -40,7 +39,8 @@ public class GameBoard {
         String name;
         message.pickPlayerName(1, "'X'");
         name = scanner.nextLine();
-        playerOne = new Player(name, "X");
+        Player playerOne = new Player(name, "X");
+        Player playerTwo;
         if (mode == 1) {
             message.pickPlayerName(2, "'Y'");
             name = scanner.nextLine();
@@ -49,11 +49,11 @@ public class GameBoard {
                 message.repeatPlayerName();
                 name = scanner.nextLine();
             }
-
             playerTwo = new Player(name, "O");
         } else {
             playerTwo = new Player("Computer", "O");
         }
+        players = new Players(playerOne, playerTwo);
     }
 
 
@@ -72,9 +72,9 @@ public class GameBoard {
             }
         }
         message.displayBoard(board);
-        message.endResult(playerOne, playerTwo);
-        playerOne.clearMoves();
-        playerTwo.clearMoves();
+        message.endResult(players);
+        players.getPlayerOne().clearMoves();
+        players.getPlayerTwo().clearMoves();
     }
 
     public boolean restartOption() {
@@ -84,9 +84,7 @@ public class GameBoard {
         if (input.equals("yes") || input.equals("YES")) {
             message.restart(2);
             restart = true;
-            Players players = gameLogic.switchPlayers(playerOne, playerTwo);
-            playerOne = players.getPlayerOne();
-            playerTwo = players.getPlayerTwo();
+            players.switchPlayers();
         } else {
             restart = false;
         }
@@ -94,13 +92,13 @@ public class GameBoard {
     }
 
     public boolean pickYourMoveX(int round) {
-        pickYourMove(playerOne);
-        return gameLogic.resultCheck(playerOne, boardSize, winSize, round, message);
+        pickYourMove(players.getPlayerOne());
+        return gameLogic.resultCheck(players.getPlayerOne(), boardSize, winSize, round, message);
     }
 
     public boolean pickYourMoveO(int round) {
-        pickYourMove(playerTwo);
-        return gameLogic.resultCheck(playerTwo, boardSize, winSize, round, message);
+        pickYourMove(players.getPlayerTwo());
+        return gameLogic.resultCheck(players.getPlayerTwo(), boardSize, winSize, round, message);
     }
 
     private void pickYourMove(Player player) {
@@ -111,7 +109,7 @@ public class GameBoard {
         while (availability || range) {
             try {
                 coordinates.update(scanner.nextInt(), scanner.nextInt());
-                availability = gameLogic.availabilityCheck(coordinates, playerOne, playerTwo, message);
+                availability = gameLogic.availabilityCheck(coordinates, players, message);
                 range = gameLogic.rangeCheck(coordinates, boardSize, message);
             } catch (Exception e) {
                 scanner.nextLine();

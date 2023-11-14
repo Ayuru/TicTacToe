@@ -45,9 +45,9 @@ public class Messages {
         }
     }
 
-    public void endResult(Player playerOne, Player playerTwo) {
+    public void endResult(Players players) {
         System.out.println("\nEND RESULT:");
-        System.out.println(playerOne.getName() + " - " + playerTwo.getName() + " " + playerOne.getPoints() + ":" + playerTwo.getPoints());
+        System.out.println(players.getPlayerOne().getName() + " - " + players.getPlayerTwo().getName() + " " + players.getPlayerOne().getPoints() + ":" + players.getPlayerTwo().getPoints());
     }
 
     public void restart(int step) {
