@@ -9,13 +9,17 @@ public class GameBoard {
     private String[][] board;
     private final int boardSize;
     private final int winSize;
-    private final Scanner scanner = new Scanner(System.in);
+    private final Messages message;
     private final GameLogic gameLogic = new GameLogic();
-    private final Messages message = new Messages();
 
-    public GameBoard(int boardSize, int winSize) {
+    private final Scanner scanner;
+
+
+    public GameBoard(int boardSize, int winSize, Messages message, Scanner scanner) {
         this.boardSize = boardSize;
         this.winSize = winSize;
+        this.message = message;
+        this.scanner = scanner;
     }
 
     public void play(int mode) {
@@ -89,12 +93,12 @@ public class GameBoard {
 
     public boolean pickYourMoveX(int round) {
         pickYourMove(playerOne);
-        return gameLogic.resultCheck(playerOne, boardSize, winSize, round);
+        return gameLogic.resultCheck(playerOne, boardSize, winSize, round, message);
     }
 
     public boolean pickYourMoveO(int round) {
         pickYourMove(playerTwo);
-        return gameLogic.resultCheck(playerTwo, boardSize, winSize, round);
+        return gameLogic.resultCheck(playerTwo, boardSize, winSize, round, message);
     }
 
     private void pickYourMove(Player player) {
@@ -105,8 +109,8 @@ public class GameBoard {
         while (availability || range) {
             try {
                 coordinates.update(scanner.nextInt(), scanner.nextInt());
-                availability = gameLogic.availabilityCheck(coordinates, playerOne, playerTwo);
-                range = gameLogic.rangeCheck(coordinates, boardSize);
+                availability = gameLogic.availabilityCheck(coordinates, playerOne, playerTwo, message);
+                range = gameLogic.rangeCheck(coordinates, boardSize, message);
             } catch (Exception e) {
                 scanner.nextLine();
                 System.out.println("Oh no! Something went wrong! Error: " + e + "\nLets try again!");

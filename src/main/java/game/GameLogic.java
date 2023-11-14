@@ -3,9 +3,7 @@ package game;
 
 public class GameLogic {
 
-    Messages message = new Messages();
-
-    public boolean availabilityCheck(Coordinates move, Player playerOne, Player playerTwo) {
+    public boolean availabilityCheck(Coordinates move, Player playerOne, Player playerTwo, Messages message) {
         if (playerOne.getMoves().contains(move) || playerTwo.getMoves().contains(move)) {
             message.fieldVerification(1);
             return true;
@@ -14,7 +12,7 @@ public class GameLogic {
         }
     }
 
-    public boolean rangeCheck(Coordinates move, int size) {
+    public boolean rangeCheck(Coordinates move, int size, Messages message) {
         if ((move.getRow() > size || move.getRow() < 1) || (move.getColumn() > size || move.getColumn() < 1)) {
             message.fieldVerification(2);
             return true;
@@ -23,7 +21,7 @@ public class GameLogic {
         }
     }
 
-    public boolean resultCheck(Player player, int boardSize, int winSize, int round) {
+    public boolean resultCheck(Player player, int boardSize, int winSize, int round, Messages message) {
         if (player.win(winSize)) {
             message.resultVerification(1, player);
             player.updatePoints();

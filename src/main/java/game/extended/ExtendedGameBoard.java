@@ -20,13 +20,16 @@ public class ExtendedGameBoard {
     private final int boardSize;
     private final int winSize;
 
+    private final Messages message;
+
     private final ExtendedGameLogic gameLogic = new ExtendedGameLogic();
 
-    private final Messages message = new Messages();
 
-    public ExtendedGameBoard(int size, int winSize) {
+
+    public ExtendedGameBoard(int size, int winSize, Messages message) {
         this.boardSize = size;
         this.winSize = winSize;
+        this.message = message;
     }
 
     public void play() {
@@ -87,12 +90,12 @@ public class ExtendedGameBoard {
 
     public boolean pickYourMoveX(int round) {
         pickYourMove(playerOne);
-        return gameLogic.resultCheck(playerOne, boardSize, winSize, round);
+        return gameLogic.resultCheck(playerOne, boardSize, winSize, round, message);
     }
 
     public boolean pickYourMoveO(int round) {
         pickYourMove(playerTwo);
-        return gameLogic.resultCheck(playerTwo, boardSize, winSize, round);
+        return gameLogic.resultCheck(playerTwo, boardSize, winSize, round, message);
     }
 
     private void pickYourMove(ExtendedPlayer player) {
@@ -104,9 +107,9 @@ public class ExtendedGameBoard {
         while (availability || range) {
             try {
                 coordinates.update(scanner.nextInt(), scanner.nextInt());
-                availability = gameLogic.availabilityCheck(coordinates, playerOne, playerTwo);
+                availability = gameLogic.availabilityCheck(coordinates, playerOne, playerTwo, message);
                 int size = 3;
-                range = gameLogic.rangeCheck(coordinates, size);
+                range = gameLogic.rangeCheck(coordinates, size, message);
             } catch (Exception e) {
                 scanner.nextLine();
                 System.out.println("Oh no! Something went wrong! Error: " + e + "\nLets try again!");

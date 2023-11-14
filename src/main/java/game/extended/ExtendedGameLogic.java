@@ -1,9 +1,11 @@
 package game.extended;
 
 import game.GameLogic;
+import game.Messages;
 import game.Players;
 
 public class ExtendedGameLogic extends GameLogic {
+
 
     public Monster[][] generateExtendedBoard(int size) {
         Dice dice = new Dice();
