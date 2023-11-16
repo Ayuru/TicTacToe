@@ -24,4 +24,5 @@ public class Players {
     public Player getPlayerTwo() {
         return playerTwo;
     }
+
 }

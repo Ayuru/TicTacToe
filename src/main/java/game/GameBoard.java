@@ -30,7 +30,7 @@ public class GameBoard {
 
         while (restart) {
             board = generator.generateBoard(boardSize);
-            gamePlay();
+            gamePlay(mode);
             restart = restartOption();
         }
     }
@@ -41,7 +41,7 @@ public class GameBoard {
         name = scanner.nextLine();
         Player playerOne = new Player(name, "X");
         Player playerTwo;
-        if (mode == 1) {
+        if (mode == 0) {
             message.pickPlayerName(2, "'Y'");
             name = scanner.nextLine();
 
@@ -57,18 +57,22 @@ public class GameBoard {
     }
 
 
-    public void gamePlay() {
+    public void gamePlay(int mode) {
 
         boolean end = false;
         int round = 0;
         while (!end) {
             round++;
             message.displayBoard(board);
-            end = pickYourMoveX(round);
+            end = resultVerificationX(round);
             if (!end) {
                 round++;
-                message.displayBoard(board);
-                end = pickYourMoveO(round);
+                if (mode == 0) {
+                    message.displayBoard(board);
+                    end = resultVerificationO(round);
+                } else {
+                    end = resultVerificationComputer(round);
+                }
             }
         }
         message.displayBoard(board);
@@ -91,17 +95,26 @@ public class GameBoard {
         return restart;
     }
 
-    public boolean pickYourMoveX(int round) {
-        pickYourMove(players.getPlayerOne());
+    public boolean resultVerificationX(int round) {
+        moveVerification(players.getPlayerOne());
         return gameLogic.resultCheck(players.getPlayerOne(), boardSize, winSize, round, message);
     }
 
-    public boolean pickYourMoveO(int round) {
-        pickYourMove(players.getPlayerTwo());
+    public boolean resultVerificationO(int round) {
+        moveVerification(players.getPlayerTwo());
         return gameLogic.resultCheck(players.getPlayerTwo(), boardSize, winSize, round, message);
     }
 
-    private void pickYourMove(Player player) {
+    public boolean resultVerificationComputer(int round) {
+        if (players.getPlayerOne().getName().equals("Computer")) {
+            moveVerificationComputer(players.getPlayerOne(), round);
+        } else {
+            moveVerificationComputer(players.getPlayerTwo(), round);
+        }
+        return gameLogic.resultCheck(players.getPlayerTwo(), boardSize, winSize, round, message);
+    }
+
+    private void moveVerification(Player player) {
         boolean availability = true;
         boolean range = true;
         Coordinates coordinates = new Coordinates(0, 0);
@@ -109,8 +122,10 @@ public class GameBoard {
         while (availability || range) {
             try {
                 coordinates.update(scanner.nextInt(), scanner.nextInt());
-                availability = gameLogic.availabilityCheck(coordinates, players, message);
-                range = gameLogic.rangeCheck(coordinates, boardSize, message);
+                availability = gameLogic.availabilityCheck(coordinates, players);
+                if(availability) message.fieldVerification(1);
+                range = gameLogic.rangeCheck(coordinates, boardSize);
+                if(range) message.fieldVerification(2);
             } catch (Exception e) {
                 scanner.nextLine();
                 System.out.println("Oh no! Something went wrong! Error: " + e + "\nLets try again!");
@@ -119,6 +134,16 @@ public class GameBoard {
         }
         player.addMove(coordinates);
         board[coordinates.getRow() - 1][coordinates.getColumn() - 1] = "  " + player.getMark() + "  ";
+    }
+
+    private void moveVerificationComputer(Player computer, int round) {
+        Computer computerLogic = new Computer();
+        System.out.println(players);
+        System.out.println(boardSize);
+        System.out.println(round);
+        Coordinates computerMove = computerLogic.move(players, boardSize, round, gameLogic);
+        computer.addMove(computerMove);
+        board[computerMove.getRow() - 1][computerMove.getColumn() - 1] = "  " + computer.getMark() + "  ";
     }
 
 }

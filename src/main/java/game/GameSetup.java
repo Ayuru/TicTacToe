@@ -4,11 +4,14 @@ import java.util.Scanner;
 
 public class GameSetup {
 
-    public enum GameMode {
-        Classic3x3Multiplayer, Classic5x5Multiplayer, Classic3x3Singleplayer, Extended
-    }
+
 
     public void run() {
+
+        enum GameMode {
+            MultiPlayer, SinglePlayer
+        }
+
         Messages message = new Messages();
         Scanner scanner = new Scanner(System.in);
         String difficulty;
@@ -17,15 +20,15 @@ public class GameSetup {
         switch (difficulty) {
             case "1" -> {
                 GameBoard board = new GameBoard(3, 3, message, scanner);
-                board.play(1);
+                board.play(GameMode.MultiPlayer.ordinal());
             }
             case "2" -> {
                 GameBoard board = new GameBoard(3, 3, message, scanner);
-                board.play(2);
+                board.play(GameMode.SinglePlayer.ordinal());
             }
             case "3" -> {
                 GameBoard board = new GameBoard(10, 5, message, scanner);
-                board.play(1);
+                board.play(GameMode.MultiPlayer.ordinal());
             }
             case "4" -> {
 

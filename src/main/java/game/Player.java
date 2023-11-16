@@ -108,4 +108,5 @@ public class Player {
     public int getPoints() {
         return points;
     }
+
 }
