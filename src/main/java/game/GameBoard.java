@@ -13,6 +13,8 @@ public class GameBoard {
 
     private final Scanner scanner;
 
+    private Coordinates coordinates = new Coordinates(0, 0);
+
 
     public GameBoard(int boardSize, int winSize, Messages message, Scanner scanner) {
         this.boardSize = boardSize;
@@ -117,7 +119,6 @@ public class GameBoard {
     private void moveVerification(Player player) {
         boolean availability = true;
         boolean range = true;
-        Coordinates coordinates = new Coordinates(0, 0);
         message.pickMove(player.getName());
         while (availability || range) {
             try {
