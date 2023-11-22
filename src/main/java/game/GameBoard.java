@@ -6,6 +6,7 @@ public class GameBoard {
     private Players players;
     private boolean restart = true;
     private String[][] board;
+    private static final String COMPUTER_NAME = "Computer";
     private final int boardSize;
     private final int winSize;
     private final Messages message;
@@ -13,14 +14,13 @@ public class GameBoard {
 
     private final Scanner scanner;
 
-    private Coordinates coordinates = new Coordinates(0, 0);
-
 
     public GameBoard(int boardSize, int winSize, Messages message, Scanner scanner) {
         this.boardSize = boardSize;
         this.winSize = winSize;
         this.message = message;
         this.scanner = scanner;
+
     }
 
     public void play(int mode) {
@@ -32,9 +32,10 @@ public class GameBoard {
 
         while (restart) {
             board = generator.generateBoard(boardSize);
-            gamePlay(mode);
+            gamePlay();
             restart = restartOption();
         }
+
     }
 
     public void intro(int mode) {
@@ -53,23 +54,27 @@ public class GameBoard {
             }
             playerTwo = new Player(name, "O");
         } else {
-            playerTwo = new Player("Computer", "O");
+            playerTwo = new Player(COMPUTER_NAME, "O");
         }
         players = new Players(playerOne, playerTwo);
     }
 
 
-    public void gamePlay(int mode) {
+    public void gamePlay() {
 
         boolean end = false;
         int round = 0;
         while (!end) {
             round++;
-            message.displayBoard(board);
-            end = resultVerificationX(round);
+            if (!players.getPlayerOne().getName().equals(COMPUTER_NAME)) {
+                message.displayBoard(board);
+                end = resultVerificationX(round);
+            } else {
+                end = resultVerificationComputer(round);
+            }
             if (!end) {
                 round++;
-                if (mode == 0) {
+                if (!players.getPlayerTwo().getName().equals(COMPUTER_NAME)) {
                     message.displayBoard(board);
                     end = resultVerificationO(round);
                 } else {
@@ -108,7 +113,7 @@ public class GameBoard {
     }
 
     public boolean resultVerificationComputer(int round) {
-        if (players.getPlayerOne().getName().equals("Computer")) {
+        if (players.getPlayerOne().getName().equals(COMPUTER_NAME)) {
             moveVerificationComputer(players.getPlayerOne(), round);
         } else {
             moveVerificationComputer(players.getPlayerTwo(), round);
@@ -119,14 +124,15 @@ public class GameBoard {
     private void moveVerification(Player player) {
         boolean availability = true;
         boolean range = true;
+        Coordinates coordinates = new Coordinates(0, 0);
         message.pickMove(player.getName());
         while (availability || range) {
             try {
                 coordinates.update(scanner.nextInt(), scanner.nextInt());
                 availability = gameLogic.availabilityCheck(coordinates, players);
-                if(availability) message.fieldVerification(1);
+                if (availability) message.fieldVerification(1);
                 range = gameLogic.rangeCheck(coordinates, boardSize);
-                if(range) message.fieldVerification(2);
+                if (range) message.fieldVerification(2);
             } catch (Exception e) {
                 scanner.nextLine();
                 System.out.println("Oh no! Something went wrong! Error: " + e + "\nLets try again!");
@@ -139,12 +145,10 @@ public class GameBoard {
 
     private void moveVerificationComputer(Player computer, int round) {
         Computer computerLogic = new Computer();
-        System.out.println(players);
-        System.out.println(boardSize);
-        System.out.println(round);
-        Coordinates computerMove = computerLogic.move(players, boardSize, round, gameLogic);
+        Coordinates computerMove = computerLogic.move(players, boardSize, round, gameLogic, COMPUTER_NAME);
         computer.addMove(computerMove);
         board[computerMove.getRow() - 1][computerMove.getColumn() - 1] = "  " + computer.getMark() + "  ";
     }
+
 
 }

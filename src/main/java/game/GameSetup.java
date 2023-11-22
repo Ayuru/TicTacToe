@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class GameSetup {
 
 
-
     public void run() {
 
         enum GameMode {
@@ -17,6 +16,7 @@ public class GameSetup {
         String difficulty;
         message.difficulty();
         difficulty = scanner.nextLine();
+
         switch (difficulty) {
             case "1" -> {
                 GameBoard board = new GameBoard(3, 3, message, scanner);

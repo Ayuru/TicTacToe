@@ -102,4 +102,5 @@ public class Messages {
         System.out.println(" HP: " + player.getPlayerClass().getCurrentHP());
         System.out.println("#################\n");
     }
+
 }

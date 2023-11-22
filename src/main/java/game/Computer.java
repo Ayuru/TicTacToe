@@ -1,11 +1,18 @@
 package game;
 
+
 public class Computer {
 
+    Player computer;
+    Player human;
 
-    public Coordinates move(Players players, int boardSize, int round, GameLogic gameLogic) {
+    public Coordinates move(Players players, int boardSize, int round, GameLogic gameLogic, String COMPUTER_NAME) {
 
         Coordinates move = new Coordinates(boardSize / 2 + 1, boardSize / 2 + 1);
+
+        computer = computerRecognition(players, COMPUTER_NAME);
+        human = humanRecognition(players, COMPUTER_NAME);
+
 
         if (round == 1) {
             return move;
@@ -15,28 +22,45 @@ public class Computer {
             } else {
                 return move;
             }
-        } else if (threePossibility(players, players.getPlayerTwo(), gameLogic, boardSize) != null) {
-            return threePossibility(players, players.getPlayerTwo(), gameLogic, boardSize);
-        } else if (threePossibility(players, players.getPlayerOne(), gameLogic, boardSize) != null) {
-            return threePossibility(players, players.getPlayerOne(), gameLogic, boardSize);
+        } else if (threePossibility(players, computer, gameLogic, boardSize) != null) {
+            return threePossibility(players, computer, gameLogic, boardSize);
+        } else if (threePossibility(players, human, gameLogic, boardSize) != null) {
+            return threePossibility(players, human, gameLogic, boardSize);
         } else {
             return fillAny(players, gameLogic, boardSize);
         }
     }
 
+    public Player computerRecognition(Players players, String COMPUTER_NAME) {
+        if (players.getPlayerOne().getName().equals(COMPUTER_NAME)) {
+            return players.getPlayerOne();
+        } else {
+            return players.getPlayerTwo();
+        }
+    }
+
+    public Player humanRecognition(Players players, String COMPUTER_NAME) {
+        if (!players.getPlayerOne().getName().equals(COMPUTER_NAME)) {
+            return players.getPlayerOne();
+        } else {
+            return players.getPlayerTwo();
+        }
+    }
+
 
     public Coordinates fillAny(Players players, GameLogic gameLogic, int boardSize) {
-        Coordinates move = new Coordinates(0,0);
+        Coordinates move = new Coordinates(0, 0);
         for (int i = 1; i <= boardSize; i++) {
             for (int j = 1; j <= boardSize; j++) {
                 move.update(i, j);
-                if(!gameLogic.availabilityCheck(move, players)) {
+                if (!gameLogic.availabilityCheck(move, players)) {
                     break;
                 }
             }
         }
         return move;
     }
+
     public Coordinates threePossibility(Players players, Player player, GameLogic gameLogic, int boardSize) {
         Coordinates playerMove = player.getMoves().get(player.getMoves().size() - 1);
         if (betweenPossibility(players, player, gameLogic, playerMove) != null) {

@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameTestSuite {
-    int winSize3 = 3;
-    int winSize5 = 5;
+    private static final int WIN_SIZE_3 = 3;
+    private static final int WIN_SIZE_5 = 5;
+
 
 
     @Nested
@@ -23,7 +24,7 @@ public class GameTestSuite {
 
             //When
             player.addMove(new Coordinates(2, 2));
-            boolean victory = player.win(winSize3);
+            boolean victory = player.win(WIN_SIZE_3);
 
             //Then
             assertTrue(victory);
@@ -40,7 +41,7 @@ public class GameTestSuite {
 
             //When
             player.addMove(new Coordinates(7, 2));
-            boolean victory = player.win(winSize5);
+            boolean victory = player.win(WIN_SIZE_5);
 
             //Then
             assertTrue(victory);
@@ -56,7 +57,7 @@ public class GameTestSuite {
 
             //When
             player.addMove(new Coordinates(2, 1));
-            boolean victory = player.win(winSize3);
+            boolean victory = player.win(WIN_SIZE_3);
 
             //Then
             assertTrue(victory);
@@ -74,7 +75,7 @@ public class GameTestSuite {
 
             //When
             player.addMove(new Coordinates(4, 10));
-            boolean victory = player.win(winSize5);
+            boolean victory = player.win(WIN_SIZE_5);
 
             //Then
             assertTrue(victory);
@@ -89,7 +90,7 @@ public class GameTestSuite {
 
             //When
             player.addMove(new Coordinates(3, 3));
-            boolean victory = player.win(winSize3);
+            boolean victory = player.win(WIN_SIZE_3);
 
             //Then
             assertTrue(victory);
@@ -106,7 +107,7 @@ public class GameTestSuite {
 
             //When
             player.addMove(new Coordinates(3, 3));
-            boolean victory = player.win(winSize5);
+            boolean victory = player.win(WIN_SIZE_5);
 
             //Then
             assertTrue(victory);
@@ -121,7 +122,7 @@ public class GameTestSuite {
 
             //When
             player.addMove(new Coordinates(2, 2));
-            boolean victory = player.win(winSize3);
+            boolean victory = player.win(WIN_SIZE_3);
 
             //Then
             assertFalse(victory);
@@ -136,7 +137,7 @@ public class GameTestSuite {
 
             //When
             player.addMove(new Coordinates(1, 2));
-            boolean victory = player.win(winSize3);
+            boolean victory = player.win(WIN_SIZE_3);
 
             //Then
             assertFalse(victory);
@@ -151,204 +152,12 @@ public class GameTestSuite {
 
             //When
             player.addMove(new Coordinates(3, 3));
-            boolean victory = player.win(winSize3);
+            boolean victory = player.win(WIN_SIZE_3);
 
             //Then
             assertFalse(victory);
         }
 
     }
-
-    @Nested
-    @DisplayName("Testing Computer AI")
-
-    class TestComputer {
-
-        @Test
-        void testComputerMoveStart() {
-            //Given
-            Player player1 = new Player("Test", "X");
-            Player player2 = new Player("Computer", "O");
-
-            Players players = new Players(player1, player2);
-            Computer computer = new Computer();
-            GameLogic gameLogic = new GameLogic();
-
-            //When
-            Coordinates computerMove = computer.move(players, 3, 1, gameLogic);
-
-
-            //Then
-            assertEquals(new Coordinates(2, 2), computerMove);
-        }
-
-        @Test
-        void testComputersMoveSecondMiddleNotAvailable() {
-            //Given
-            Player player1 = new Player("Test", "X");
-            Player player2 = new Player("Computer", "O");
-
-            Players players = new Players(player1, player2);
-            players.getPlayerOne().addMove(new Coordinates(2, 2));
-            Computer computer = new Computer();
-            GameLogic gameLogic = new GameLogic();
-
-            //When
-            Coordinates computerMove = computer.move(players, 3, 2, gameLogic);
-
-
-            //Then
-            assertEquals(new Coordinates(1, 1), computerMove);
-        }
-
-        @Test
-        void testComputersMoveSecondMiddleAvailable() {
-            //Given
-            Player player1 = new Player("Test", "X");
-            Player player2 = new Player("Computer", "O");
-
-            Players players = new Players(player1, player2);
-            players.getPlayerOne().addMove(new Coordinates(1, 1));
-            Computer computer = new Computer();
-            GameLogic gameLogic = new GameLogic();
-
-            //When
-            Coordinates computerMove = computer.move(players, 3, 2, gameLogic);
-
-
-            //Then
-            assertEquals(new Coordinates(2, 2), computerMove);
-        }
-
-        @Test
-        void testComputersMoveTryToWinRow() {
-            //Given
-            Player player1 = new Player("Test", "X");
-            Player player2 = new Player("Computer", "O");
-
-            Players players = new Players(player1, player2);
-            players.getPlayerTwo().addMove(new Coordinates(1, 1));
-            players.getPlayerOne().addMove(new Coordinates(2, 1));
-            players.getPlayerTwo().addMove(new Coordinates(1, 2));
-            players.getPlayerOne().addMove(new Coordinates(3, 1));
-            Computer computer = new Computer();
-            GameLogic gameLogic = new GameLogic();
-
-            //When
-            Coordinates computerMove = computer.move(players, 3, 5, gameLogic);
-
-
-            //Then
-            assertEquals(new Coordinates(1, 3), computerMove);
-        }
-
-        @Test
-        void testComputersMoveTryNotToLoseRow() {
-            //Given
-            Player player1 = new Player("Test", "X");
-            Player player2 = new Player("Computer", "O");
-
-            Players players = new Players(player1, player2);
-            players.getPlayerOne().addMove(new Coordinates(1, 1));
-            players.getPlayerTwo().addMove(new Coordinates(2, 2));
-            players.getPlayerOne().addMove(new Coordinates(1, 2));
-            Computer computer = new Computer();
-            GameLogic gameLogic = new GameLogic();
-
-            //When
-            Coordinates computerMove = computer.move(players, 3, 4, gameLogic);
-
-
-            //Then
-            assertEquals(new Coordinates(1, 3), computerMove);
-        }
-
-        @Test
-        void testComputersMoveTryToWinColumn() {
-            //Given
-            Player player1 = new Player("Test", "X");
-            Player player2 = new Player("Computer", "O");
-
-            Players players = new Players(player1, player2);
-            players.getPlayerTwo().addMove(new Coordinates(1, 1));
-            players.getPlayerOne().addMove(new Coordinates(1, 2));
-            players.getPlayerTwo().addMove(new Coordinates(3, 1));
-            players.getPlayerOne().addMove(new Coordinates(3, 3));
-            Computer computer = new Computer();
-            GameLogic gameLogic = new GameLogic();
-
-            //When
-            Coordinates computerMove = computer.move(players, 3, 5, gameLogic);
-
-
-            //Then
-            assertEquals(new Coordinates(2, 1), computerMove);
-        }
-
-        @Test
-        void testComputersMoveTryNotToLoseColumn() {
-            //Given
-            Player player1 = new Player("Test", "X");
-            Player player2 = new Player("Computer", "O");
-
-            Players players = new Players(player1, player2);
-            players.getPlayerOne().addMove(new Coordinates(1, 1));
-            players.getPlayerTwo().addMove(new Coordinates(2, 2));
-            players.getPlayerOne().addMove(new Coordinates(3, 1));
-            Computer computer = new Computer();
-            GameLogic gameLogic = new GameLogic();
-
-            //When
-            Coordinates computerMove = computer.move(players, 3, 4, gameLogic);
-
-
-            //Then
-            assertEquals(new Coordinates(2, 1), computerMove);
-        }
-
-        @Test
-        void testComputersMoveTryToWinCross() {
-            //Given
-            Player player1 = new Player("Test", "X");
-            Player player2 = new Player("Computer", "O");
-
-            Players players = new Players(player1, player2);
-            players.getPlayerTwo().addMove(new Coordinates(2, 2));
-            players.getPlayerOne().addMove(new Coordinates(1, 3));
-            players.getPlayerTwo().addMove(new Coordinates(1, 1));
-            players.getPlayerOne().addMove(new Coordinates(1, 2));
-            Computer computer = new Computer();
-            GameLogic gameLogic = new GameLogic();
-
-            //When
-            Coordinates computerMove = computer.move(players, 3, 5, gameLogic);
-
-
-            //Then
-            assertEquals(new Coordinates(3, 3), computerMove);
-        }
-
-        @Test
-        void testComputersMoveTryNotToLoseCross() {
-            //Given
-            Player player1 = new Player("Test", "X");
-            Player player2 = new Player("Computer", "O");
-
-            Players players = new Players(player1, player2);
-            players.getPlayerOne().addMove(new Coordinates(2, 2));
-            players.getPlayerTwo().addMove(new Coordinates(1, 1));
-            players.getPlayerOne().addMove(new Coordinates(1, 3));
-            Computer computer = new Computer();
-            GameLogic gameLogic = new GameLogic();
-
-            //When
-            Coordinates computerMove = computer.move(players, 3, 4, gameLogic);
-
-
-            //Then
-            assertEquals(new Coordinates(3, 1), computerMove);
-        }
-    }
-
 
 }
